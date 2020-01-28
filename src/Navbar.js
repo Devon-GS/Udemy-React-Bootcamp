@@ -28,37 +28,45 @@ class Navbar extends Component {
 	}
 
 	render() {
-		const { level, changeLevel } = this.props;
+		const { level, changeLevel, showSlider } = this.props;
 		const { format } = this.state;
 		return (
 			<header className="Navbar">
 				<div className="logo">
 					<Link to="/">reactcolorpicker</Link>
 				</div>
-				<div className="slider-container">
-					<span>Level: {level}</span>
-					<div className="slider">
-						<Slider
-							defaultValue={level}
-							min={100}
-							max={900}
-							step={100}
-							onAfterChange={changeLevel}
-						/>
+				{showSlider && (
+					<div className="slider-container">
+						<span>Level: {level}</span>
+						<div className="slider">
+							<Slider
+								defaultValue={level}
+								min={100}
+								max={900}
+								step={100}
+								onAfterChange={changeLevel}
+							/>
+						</div>
 					</div>
-				</div>
+				)}
 				<div className="select-container">
 					<Select value={format} onChange={this.handleFormatChange}>
 						<MenuItem value="hex">HEX - #fffff</MenuItem>
 						<MenuItem value="rgb">RGB - rgb(255,255,255)</MenuItem>
-						<MenuItem value="rgba">RGBA - rgba(255,255,255, 1.0)</MenuItem>
+						<MenuItem value="rgba">
+							RGBA - rgba(255,255,255, 1.0)
+						</MenuItem>
 					</Select>
 				</div>
 				<Snackbar
 					anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
 					open={this.state.open}
 					autoHideDuration={3000}
-					message={<span id="message-id">Format Changed To {format.toUpperCase()}</span>}
+					message={
+						<span id="message-id">
+							Format Changed To {format.toUpperCase()}
+						</span>
+					}
 					contentProps={{ "aria-describedby": "message-id" }}
 					onClose={this.closeSnackbar}
 					action={[
